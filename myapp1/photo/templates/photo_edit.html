@@ -1,0 +1,51 @@
+{% extends 'base.html' %} {% block title %}
+<title>수정</title>
+{% endblock title %} {% block contents %}
+<h1>{{photo.title}}</h1>
+<div class="row py-3">
+  <div class="col">
+    <a href="{% url 'photo_list' %}" class="btn btn-info">List Photo</a>
+  </div>
+</div>
+<div class="row pt-4">
+  <h2>Edit Photo</h2>
+</div>
+<!-- 사진 수정 폼 -->
+<div class="row pt-4">
+  <div class="col-8 mx-auto">
+    {% if form.errors %}
+    <div class="alert alert-danger">
+      {% for field in form %} {% if field.errors %}
+      <strong>{{field.label}}</strong>
+      {{field.errors}} {% endif %} {% endfor %}
+    </div>
+    {% endif %} {% comment %} 에러가 있다면 메시지로 보여주는 코드 - 폼 태그를 썼을때 편함.. {% endcomment %}
+
+    <form method="post">
+      {% csrf_token %} {% comment %} {{form.as_p}} (p로 폼을 감싸주라는뜻)이렇게 할 수 있지만 안 예쁨 {% endcomment %}
+      <div class="mb-3">
+        <label for="title" class="form-label">title</label>
+        <input type="text" class="form-control" id="title" name="title" value="{{form.title.value|default_if_none:''}}" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="author" class="form-label">author</label>
+        <input type="text" class="form-control" id="author" name="author" value="{{form.author.value|default_if_none:''}}" />
+      </div>
+      <div class="mb-3">
+        <label for="image" class="form-label">image</label>
+        <input type="text" class="form-control" id="image" name="image" value="{{form.image.value|default_if_none:''}}" readonly />
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">description</label>
+        <textarea class="form-control" id="description" name="description" rows="10" readonly>{{form.description.value|default_if_none:''}}</textarea>
+      </div>
+      <div class="mb-3">
+        <label for="price" class="form-label">price</label>
+        <input type="number" class="form-control" id="price" name="price" value="{{form.price.value|default_if_none:''}}" />
+      </div>
+      <button type="submit" class="btn btn-primary">사진수정</button>
+    </form>
+    <script></script>
+  </div>
+</div>
+{% endblock contents %}
