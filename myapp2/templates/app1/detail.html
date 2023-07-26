@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block contents %}
+  <h1>App1 Detail</h1>
+  <a href="{% url 'app1:info' %}" class="btn btn-success">이동</a>
+  <img src="{% static 'img/bambi.png' %}" alt="">
+{% endblock contents %}

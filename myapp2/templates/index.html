@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block contents %}
+  <h1>INDEX -
+    {{request.user}}</h1>
+    {% comment %} user를 간단하게 확인할 수 있는 코드 {% endcomment %}
+  <ul>
+    <li>
+      <a href="{% url 'app1:detail' %}">app1</a>
+    </li>
+    <li>
+      <a href="{% url 'app2:detail' %}">app2</a>
+    </li>
+    <li>
+      <a href="{% url 'users:main' %}">users</a>
+    </li>
+  </ul>
+{% endblock contents %}
