@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block contents %}
+  <h2 class="border-bottom py-2">
+    <!-- 질문 제목 -->
+    {{question.subject}}
+  </h2>
+  <!-- 추천 영역 -->
+  <div class="row my-3">
+    <div class="col-1">
+      <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
+        <!-- 추천수 -->
+      </div>
+      <a href="" class="recommand btn btn-sm btn-secondary btn-block my-1">추천</a>
+    </div>
+    <div class="col-11">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-text">
+            <!-- 질문 내용 -->
+            {{question.content}}
+          </div>
+          <div class="d-flex justify-content-end">
+            <div class="badge text-bg-light p-2 text-left">
+              <div class="mb-2">
+                <!-- 작성자 -->
+              </div>
+              <!-- 질문작성날짜-->
+              {{question.created_at}}
+            </div>
+          </div>
+          <!-- 수정 날짜 -->
+          <div class="d-flex justify-content-end">
+            <div class="badge text-bg-light p-2 text-left">
+              <div class="mb-2">modified_at</div>
+              <!-- 질문수정날짜-->
+            </div>
+          </div>
+          <!-- //수정 날짜 종료-->
+          <div class="my-3">
+            <a href="" class="btn btn-sm btn-outline-secondary">수정</a>
+            <a href="" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+          </div>
+          <!-- 질문 댓글 영역 -->
+          <div class="mt-3">
+            <a name=""></a>
+            <div class="comment py-2 text-muted">
+              <span style="white-space:pre-line"></span>
+              <span>
+                <!-- 댓글 작성자 / 작성일시 / 수정일시 -->
+              </span>
+              <a href="" class="small">수정</a>
+              <a href="" class="small delete">삭제</a>
+            </div>
+          </div>
+        </div>
+        <div class="mx-3">
+          <a href="" class="small">댓글추가....</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Answer 영역 question 과 answer 외래키 제약조건 상태 question.answer_set question.answer_set.count : question 에 달린 댓글 갯수 question.answer_set.all : question 에 달린 댓글 전체 가져올때 -->
+  <h5 class="border-bottom py-2 my-3">
+    <!-- 답변 개수 -->
+    {{question.answer_set.count}}
+    개의 답변이 있습니다.
+  </h5>
+  {% for answer in question.answer_set.all %}
+    <a name=""></a>
+    <!-- 추천 영역 -->
+    <div class="row my-3">
+      <div class="col-1">
+        <div class="bg-light text-center p-3 border font-weight-bolder mb-1">
+          <!-- 추천수 -->
+        </div>
+        <a href="" class="recommand btn btn-sm btn-secondary btn-block my-1">추천</a>
+      </div>
+      <div class="col-11">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-text">
+              <!-- 답변 내용 -->
+              {{answer.content}}
+            </div>
+            <div class="d-flex justify-content-end">
+              <div class="badge text-bg-light p-2 text-left">
+                <!-- 답변 작성자 -->
+                <div class="mb-2"></div>
+                <!-- 답변작성날짜-->
+                {{answer.created_at}}
+              </div>
+            </div>
+            <!-- 답변 수정 날짜 -->
+            <div class="d-flex justify-content-end">
+              <div class="badge text-bg-light p-2 text-left">
+                <div class="mb-2">modified_at</div>
+                <!-- 답변수정날짜-->
+              </div>
+            </div>
+            <!-- //답변 날짜 종료-->
+            <div class="my-3">
+              <a href="" class="btn btn-sm btn-outline-secondary">수정</a>
+              <a href="" class="delete btn btn-sm btn-outline-secondary">삭제</a>
+            </div>
+            <!-- 답변 댓글 영역 -->
+            <div class="mt-3">
+              <a name=""></a>
+              <div class="comment py-2 text-muted">
+                <span style="white-space:pre-line"></span>
+                <span>
+                  <!-- 댓글 작성자 / 작성일시 / 수정일시 -->
+                </span>
+                <a href="" class="small">수정</a>
+                <a href="" class="small delete">삭제</a>
+              </div>
+            </div>
+          </div>
+          <div class="mx-3">
+            <a href="" class="small">댓글추가....</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+  <div>
+    <a href="{% url 'board:index' %}" class="btn btn-sm btn-primary">목록으로</a>
+  </div>
+  <form action="{% url 'board:answer_create' question.id %}" method="post" class="my-3">
+    {% include 'errors.html' %}
+    {% csrf_token %}
+    <div class="form-group mb-3">
+      <textarea name="content" id="content" rows="10" class="form-control"></textarea>
+    </div>
+    <input type="submit" value="답변등록" class="btn btn-success">
+  </form>
+
+{% endblock contents %}
