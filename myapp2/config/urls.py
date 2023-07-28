@@ -25,4 +25,6 @@ urlpatterns = [
     path("users/", include("users.urls")),
     # http://127.0.0.1:8000/
     path("", index, name="index"),
+    # 장고가 제공하는 views(User) 확인
+    # path("accounts/", include("django.contrib.auth.urls")),
 ]

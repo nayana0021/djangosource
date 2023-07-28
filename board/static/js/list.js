@@ -7,4 +7,9 @@ document.querySelector(".pagination").addEventListener("click", (e) => {
   // href 가져오기
   let href = e.target.getAttribute("href");
   console.log(href);
+
+  //href 값 actionForm 의 page value 값 대입
+  document.querySelector("#page").value = href;
+  // actionForm 전송
+  document.querySelector("#actionForm").submit();
 });

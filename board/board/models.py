@@ -1,9 +1,12 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Question 테이블
 # 번호(자동생성),제목,내용,작성날짜,수정날짜
 class Question(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # 유저가 탈퇴하면 전부 삭제
     subject = models.CharField(max_length=200, verbose_name="제목")
     # subject 라는 컬럼명 말고 "제목"이라는 이름으로 보여줘 이 뜻임
     content = models.TextField(verbose_name="내용")
@@ -19,6 +22,7 @@ class Question(models.Model):
 # Answer 테이블
 # 번호(자동생성),외래키 제약,내용,작성날짜,수정날짜
 class Answer(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField(verbose_name="내용")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="작성날짜")
