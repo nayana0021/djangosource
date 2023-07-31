@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% load board_filter %}
 {% load static %}
+{% load humanize %}
 {% block contents %}
   <div class="my-3">
+      <div class="input-group mb-3">
+        <input type="text" name="" id="top_keyword" class="form-control">
+        <button class="btn btn-outline-secondary" type="submit" id="btn-search">찾기</button>
+      </div>
     <table class="table">
       <thead>
         <tr class="table-success">
           <th scope="col">번호</th>
+          <th scope="col">추천</th>
           <th scope="col">제목</th>
           <th scope="col">작성자</th>
           <th scope="col">작성일시</th>
@@ -17,6 +23,14 @@
           {% for question in question_list %}
             <tr>
               <th scope="row">{{question_list.paginator.count|sub:question_list.start_index|sub:forloop.counter0|add:1}}</th>
+              <td>
+                <!-- 질문 추천 수 보여주기 -->
+                {% if question.voter.all.count %}
+                  <span class="badge text-bg-warning px-2 py-1">
+                    {{question.voter.all.count}}
+                  </span>
+                {% endif %}
+              </td>
               <td>
                 <a href="{% url 'board:detail' question.id %}" class="text-decoration-none text-dark">
                   {{question.subject}}
@@ -29,7 +43,8 @@
                 </a>
               </td>
               <td>{{question.author}}</td>
-              <td>{{question.created_at}}</td>
+              {% comment %} <td>{{question.created_at|date}}</td> {% endcomment %}
+              <td>{{question.created_at|naturaltime}}</td>
             </tr>
           {% endfor %}
         {% else %}
@@ -70,6 +85,7 @@
 
   <!-- 페이지 번호 클릭 시 이동할 폼 -->
   <form action="" method="get" id="actionForm">
+    <input type="hidden" name="keyword" value="" id="keyword">
     <input type="hidden" name="page" value="{{page}}" id="page">
   </form>
 {% endblock contents %}
