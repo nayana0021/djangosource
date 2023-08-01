@@ -25,6 +25,8 @@ class Question(models.Model):
     # 어드민을 통해서 질문을 등록하면 수정날짜도 생성날짜랑 같이 들어가지만 폼에서 입력한것은 수정날짜가 null 로 들어간다(auto_now_add=True 가 아니라서)
     # 추천 필드
     voter = models.ManyToManyField(User, related_name="voter_question")
+    # 조회수
+    view_cnt = models.BigIntegerField(default=0)
 
     def __str__(self) -> str:
         return self.subject
@@ -56,3 +58,16 @@ class Comment(models.Model):
         Question, on_delete=models.CASCADE, null=True, blank=True
     )
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True, blank=True)
+
+
+class QuestionCount(models.Model):
+    """
+    조회수 업데이트를 위한 모델
+    사용자의 ip 저장
+    """
+
+    ip = models.CharField(max_length=30)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return self.ip

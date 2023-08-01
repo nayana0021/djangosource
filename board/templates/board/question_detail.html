@@ -200,6 +200,13 @@
     <input type="submit" value="답변등록" class="btn btn-success" {% if not user.is_authenticated %} disabled="disabled" {% endif %}>
   </form>
 
+  <!-- 목록으로 클릭 시 이동할 폼 -->
+  <form action="{% url 'board:index' %}" method="get" id="actionForm">
+    <input type="hidden" name="keyword" value="{{keyword|default_if_none:''}}" id="keyword">
+    <input type="hidden" name="page" value="{{page|default_if_none:''}}" id="page">
+    <input type="hidden" name="sort" value="{{sort|default_if_none:''}}" id="sort">
+  </form>
+
 {% endblock contents %}
 {% block script %}
   <script src="{% static 'js/detail.js' %}"></script>

@@ -35,3 +35,28 @@ document.querySelector("#btn-search").addEventListener("click", (e) => {
   document.querySelector("#keyword").value = top_keyword.value;
   document.querySelector("#actionForm").submit();
 });
+
+// 정렬 기준 변화 시 값을 가져와서
+// actionForm page=1로 변경
+// actionForm에 sort 에 값 변경한 후 actionForm 전송
+document.querySelector(".so").addEventListener("change", (e) => {
+  const sort = e.target.value;
+  document.querySelector("#page").value = 1;
+  document.querySelector("#sort").value = sort;
+  document.querySelector("#actionForm").submit();
+});
+
+// 제목 클릭 시
+// a 태그 중지, href 값 가져오기
+// actionForm 의 action 값을 가져온 href 변경 후 actionForm submit
+const titles = document.querySelectorAll(".text-decoration-none");
+
+titles.forEach((title) => {
+  title.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    let actionForm = document.querySelector("#actionForm");
+    actionForm.action = e.target.href;
+    actionForm.submit();
+  });
+});
